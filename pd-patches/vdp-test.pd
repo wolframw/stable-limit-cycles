@@ -1,0 +1,24 @@
+#N canvas 942 418 729 379 10;
+#X obj 50 100 vdp~;
+#X obj 50 50 hsl 128 15 20 4000 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X floatatom 60 70 5 0 0 0 - - -, f 5;
+#X text 50 30 Frequency;
+#X text 230 30 mu;
+#X obj 230 50 hsl 128 15 0 10 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X floatatom 240 70 5 0 0 0 - - -, f 5;
+#X obj 50 140 *~;
+#X obj 100 120 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X obj 50 170 dac~;
+#X floatatom 110 150 5 0 0 0 - - -, f 5;
+#X connect 0 0 7 0;
+#X connect 1 0 2 0;
+#X connect 1 0 0 0;
+#X connect 5 0 0 1;
+#X connect 5 0 6 0;
+#X connect 7 0 9 0;
+#X connect 7 0 9 1;
+#X connect 8 0 7 1;
+#X connect 8 0 10 0;
