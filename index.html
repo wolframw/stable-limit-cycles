@@ -1,9 +1,88 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Stable Limit Cycles as Tunable Signal Sources</title>
-  </head>
+<style>
+  html {
+    font-family: sans-serif;
+  }
+  h1 {
+    font-size: 1.5em;
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
 
-  <body>
-    Supplementary materials will be made available here.
-  </body>
+  h2 {
+    font-size: 1.25em;
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+
+  h3 {
+    font-size: 1em;
+    margin: 0;
+    font-weight: bold;
+  }
+</style>
+
+<head>
+  <title>Stable Limit Cycles as Tunable Signal Sources</title>
+</head>
+
+<body>
+  <main style="max-width:900px">
+    <h1>Stable Limit Cycles as Tunable Signal Sources</h1>
+    <p><span style="font-weight: bold;">Abstract: </span>
+      This paper presents a method for synthesizing audio signals from nonlinear dynamical systems exhibiting stable
+      limit
+      cycles, with control over frequency and amplitude independent of changes to the system's internal parameters.
+      Using
+      the van der Pol oscillator and the Brusselator as case studies, it is demonstrated how parameters are decoupled
+      from
+      frequency and amplitude by rescaling the angular frequency and normalizing amplitude extrema. Practical
+      implementation considerations are discussed, as are the limits and challenges of this approach. The method's
+      validity is confirmed experimentally and synthesis examples show the application of tunable nonlinear oscillator
+      in
+      sound design, including the generation of transients in FM synthesis by means of a van der Pol oscillator and a
+      Supersaw oscillator bank based on the Brusselator.
+    </p>
+    <p>Read the full paper <a href="stable_limit_cycles.pdf" target="_blank">here</a>.</p>
+    <h2>Supplementary Materials</h2>
+    <p>Find the source code and Pure Data obects in the repo <a href="https://github.com/wolframw/stable-limit-cycles">here</a>.</p>
+    <h3>FM Synthesis</h3>
+    <ul>
+      <li>Sinusoidal (classical):
+        <ul>200 Hz: <audio controls src="audio/bell1.wav" style="height: 20px;"></audio></ul>
+        <ul>400 Hz: <audio controls src="audio/bell2.wav" style="height: 20px;"></audio></ul>
+        <ul>500 Hz: <audio controls src="audio/bell3.wav" style="height: 20px;"></audio></ul>
+      </li>
+      <li>Van der Pol oscillators as carriers with percussive envelope, enveloped µ:
+        <ul>200 Hz:<audio controls src="audio/bell1-vdp1.wav" style="height: 20px;"></audio></ul>
+        <ul>300 Hz:<audio controls src="audio/bell2-vdp1.wav" style="height: 20px;"></audio></ul>
+        <ul>400 Hz:<audio controls src="audio/bell3-vdp1.wav" style="height: 20px;"></audio></ul>
+        <ul>500 Hz:<audio controls src="audio/bell4-vdp1.wav" style="height: 20px;"></audio></ul>
+        <ul>600 Hz:<audio controls src="audio/bell5-vdp1.wav" style="height: 20px;"></audio></ul>
+      </li>
+      <li>Van der Pol oscillators as carriers and modulators with percussive envelope, enveloped µ:
+        <ul>200 Hz:<audio controls src="audio/bell1-vdp2.wav" style="height: 20px;"></audio></ul>
+        <ul>300 Hz:<audio controls src="audio/bell2-vdp2.wav" style="height: 20px;"></audio></ul>
+        <ul>400 Hz:<audio controls src="audio/bell3-vdp2.wav" style="height: 20px;"></audio></ul>
+        <ul>500 Hz:<audio controls src="audio/bell4-vdp2.wav" style="height: 20px;"></audio></ul>
+        <ul>600 Hz:<audio controls src="audio/bell5-vdp2.wav" style="height: 20px;"></audio></ul>
+      </li>
+    </ul>
+    <h3>Supersaw</h3>
+    <ul>
+      <li>Sawtooth (classcal):
+        <ul>50 Hz to 440 Hz and back, Detune from 0 to 0.8: <audio controls src="audio/supersaw1.wav" style="height: 20px;"></audio></ul>
+      </li>
+      <li>Brusselator:
+        <ul>50 Hz to 440 Hz and back, Detune from 0 to 0.8, A = 1, B = 6: <audio controls src="audio/supersaw-brusselator1.wav" style="height: 20px;"></audio></ul>
+        <ul>50 Hz, Detune = 0.8, A = 1, B from 6 to 8 and back: <audio controls src="audio/supersaw-brusselator2.wav" style="height: 20px;"></audio></ul>
+        <ul>220 Hz, Detune = 0.8, A = 2.2, B from 8 to 6 and back: <audio controls src="audio/supersaw-brusselator3.wav" style="height: 20px;"></audio></ul>
+        <ul>110 Hz, Detune = 0.8, A = 2.2, B from 8 to 6 and back: <audio controls src="audio/supersaw-brusselator4.wav" style="height: 20px;"></audio></ul>
+        <ul>440 Hz, Detune = 0.8, B = 6, A from 2.2 to 1 and back:<audio controls src="audio/supersaw-brusselator5.wav" style="height: 20px;"></audio></ul>
+      </li>
+    </ul>
+  </main>
+</body>
+
 </html>
