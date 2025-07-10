@@ -6,7 +6,8 @@
 
 static t_class *brussel_tilde_class;
 
-#define OS_FACTOR 20
+#define SUBSTEPS        24
+#define OVERSAMPLING    12
 
 typedef struct {
     /* PD object */
@@ -90,29 +91,23 @@ t_int *brussel_tilde_perform( t_int *w )
     int          n       = (int)(w[6]);
 
     while ( n-- ) {
-        float clamped_freq = clampf( 20.0f, 1000.0f, *in_freq );
-        float clamped_a    = clampf( 1.35f, BRUSSEL_A_MAX, *in_a );
-        float clamped_b    = clampf( BRUSSEL_B_MIN, BRUSSEL_B_MAX, *in_b );
+        float freq = clampf( 20.0f, 1000.0f, *in_freq );
+        float a    = clampf( BRUSSEL_A_MIN, BRUSSEL_A_MAX, *in_a );
+        float b    = clampf( BRUSSEL_B_MIN, BRUSSEL_B_MAX, *in_b );
 
         float sample = 0.0f;
         int i;
-        for ( i = 0; i < OS_FACTOR; ++i ) {
-            float freq   = lerp( clamped_freq, brussel->freq, (float) i / (OS_FACTOR - 1) );
-            float a      = lerp( clamped_a, brussel->a, (float) i / (OS_FACTOR - 1) );
-            float b      = lerp( clamped_b, brussel->b, (float) i / (OS_FACTOR - 1) );
-            
-            lut3 lc = brussel_lookup( a, b );
-
-            float dt     = (lc.period * freq) / (sys_getsr() * OS_FACTOR);
-
+        for ( i = 0; i < SUBSTEPS; ++i ) {
+            lut3  lc = brussel_lookup( a, b );
+            float dt = (lc.period * freq) / (sys_getsr() * SUBSTEPS);
             solve( brussel->state, a, b, dt );
-            sample = (0.8 / (lc.gmin - lc.gmax)) * (lc.gmax + lc.gmin - 2 * brussel->state[0]);
-            sample = biquad( sample, brussel->filter_state, butter8_20, butter8_20_size );
-        }
 
-        brussel->freq = clamped_freq;
-        brussel->a    = clamped_a;
-        brussel->b    = clamped_b;
+            if (i % (SUBSTEPS / OVERSAMPLING) == 0) {
+                /* 0.83 is the fudge factor here because with a low, b high, things clip quite a bit */
+                sample = (0.83f / (lc.gmin - lc.gmax)) * (lc.gmax + lc.gmin - 2 * brussel->state[0]);
+                sample = biquad( sample, brussel->filter_state, butter8_12, butter8_20_size );
+            }
+        }
 
         *out = sample;
 

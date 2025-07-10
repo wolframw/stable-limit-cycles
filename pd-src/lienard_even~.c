@@ -6,7 +6,8 @@
 
 static t_class *lienard_even_tilde_class;
 
-#define OS_FACTOR 20
+#define SUBSTEPS        24
+#define OVERSAMPLING    12
 
 typedef struct {
     /* PD object */
@@ -14,9 +15,6 @@ typedef struct {
 
     /* state */
     t_float      f;
-    t_float      freq;
-    t_float      mu;
-    t_float      force;
     t_float      state[2];
     biquad_state filter_state[butter8_20_size];
 
@@ -32,9 +30,6 @@ typedef struct {
 void *lienard_even_tilde_new( void )
 {
     t_lienard_even_tilde *lienard_even = (t_lienard_even_tilde *) pd_new( lienard_even_tilde_class );
-    lienard_even->freq        = 0.0f;
-    lienard_even->mu          = 0.0f;
-    lienard_even->force       = 0.0f;
     lienard_even->state[0]    = 2.0f;
     lienard_even->state[1]    = 0.0f;
     memset( lienard_even->filter_state, 0, sizeof(float) * butter8_20_size );
@@ -88,26 +83,19 @@ t_int *lienard_even_tilde_perform( t_int *w )
     int          n        = (int)(w[6]);
 
     while ( n-- ) {
-        float clamped_freq  = clampf( 0.0f, 4000.0f, *in_freq );
-        float clamped_mu    = clampf( 0.0f, 5.0f, *in_mu );
-        float clamped_force = clampf( -10.0f, 10.0f, *in_force );
+        float freq  = clampf( 0.0f, 4000.0f, *in_freq );
+        float mu    = clampf( 0.0f, 5.0f, *in_mu );
+        float force = clampf( -10.0f, 10.0f, *in_force );
 
         float sample = 0.0f;
         int i;
-        for ( i = 0; i < OS_FACTOR; ++i ) {
-            float freq   = lerp( clamped_freq, lienard_even->freq, (float) i / (OS_FACTOR - 1) );
-            float mu     = lerp( clamped_mu, lienard_even->mu, (float) i / (OS_FACTOR - 1) );
-            float force  = lerp( clamped_force, lienard_even->force, (float) i / (OS_FACTOR - 1) );
-            lut3 lc = lienard_even_lookup( mu );
-            float dt     = (lc.period * freq) / (sys_getsr() * OS_FACTOR);
-
+        for ( i = 0; i < SUBSTEPS; ++i ) {
+            lut3 lc  = lienard_even_lookup( mu );
+            float dt = (lc.period * freq) / (sys_getsr() * SUBSTEPS);
             solve( lienard_even->state, mu, force, dt );
             sample = (0.9 / (lc.gmin - lc.gmax)) * (lc.gmax + lc.gmin - 2 * lienard_even->state[0]);
             sample = biquad( sample, lienard_even->filter_state, butter8_20, butter8_20_size );
         }
-
-        lienard_even->freq = clamped_freq;
-        lienard_even->mu = clamped_mu;
 
         *out = sample;
 

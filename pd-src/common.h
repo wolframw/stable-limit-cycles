@@ -20,6 +20,9 @@ typedef struct
     float z1, z2;
 } biquad_state;
 
+#define butter8_4_size 4
+extern const biquad_spec butter8_4[];
+
 #define butter8_8_size 4
 extern const biquad_spec butter8_8[];
 

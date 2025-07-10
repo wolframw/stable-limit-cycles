@@ -1,15 +1,15 @@
 #N canvas 513 209 1299 740 10;
 #X obj 30 40 hsl 128 15 20 1000 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 1766 1;
+#000000 #000000 5800 1;
 #X obj 110 60 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
-#fcfcfc #000000 #000000 156.274 256 0;
+#fcfcfc #000000 #000000 467.559 256 0;
 #X obj 30 10 nbx 5 14 20 1000 0 0 empty empty empty 0 -8 0 10 #fcfcfc
-#000000 #000000 110 256 0;
+#000000 #000000 20 256 0;
 #X text 100 10 Freq;
 #X obj 670 40 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 9550 1;
+#000000 #000000 8400 1;
 #X obj 750 60 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
-#fcfcfc #000000 #000000 0.751969 256 0;
+#fcfcfc #000000 #000000 0.661417 256 0;
 #X obj 670 10 nbx 5 14 0 1 0 0 empty empty empty 0 -8 0 10 #fcfcfc
 #000000 #000000 0 256 0;
 #X text 740 10 Detune;
@@ -26,9 +26,9 @@
 #X obj 490 350 fexpr~ $x1 * (1 - 0.0621654 * $x2);
 #X obj 870 350 fexpr~ $x1 * (1 - 0.107452 * $x2);
 #X obj 870 40 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 7850 1;
+#000000 #000000 0 1;
 #X obj 950 60 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
-#fcfcfc #000000 #000000 0.61811 256 0;
+#fcfcfc #000000 #000000 0 256 0;
 #X obj 870 10 nbx 5 14 0 1 0 0 empty empty empty 0 -8 0 10 #fcfcfc
 #000000 #000000 0 256 0;
 #X text 940 10 Mix;
@@ -42,7 +42,7 @@
 #X obj 30 505 *~ 0.143;
 #X obj 30 550 *~;
 #X obj 90 550 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 2400 1;
+#000000 #000000 1700 1;
 #X floatatom 90 570 5 0 0 0 - - -, f 5;
 #X obj 30 590 dac~;
 #X obj 870 280 fexpr~ $x1 * (-0.73764*pow($x2 \, 2) + 1.2841*$x1 +
@@ -66,17 +66,17 @@
 #X obj 870 370 brussel~;
 #X obj 490 370 brussel~;
 #X obj 110 370 brussel~;
-#X obj 220 40 hsl 128 15 1 2.2 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 220 40 hsl 128 15 1.35 2.2 0 0 empty empty empty -2 -8 0 10
+#fcfcfc #000000 #000000 6100 1;
 #X obj 300 60 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
-#fcfcfc #000000 #000000 0 256 0;
-#X obj 220 10 nbx 5 14 0 1 0 0 empty empty empty 0 -8 0 10 #fcfcfc
-#000000 #000000 0 256 0;
+#fcfcfc #000000 #000000 1.75827 256 0;
+#X obj 220 10 nbx 5 14 1.35 1 0 0 empty empty empty 0 -8 0 10 #fcfcfc
+#000000 #000000 1 256 0;
 #X text 290 10 A;
 #X obj 410 40 hsl 128 15 6 8 0 0 empty empty empty -2 -8 0 10 #fcfcfc
 #000000 #000000 0 1;
 #X obj 490 60 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
-#fcfcfc #000000 #000000 0 256 0;
+#fcfcfc #000000 #000000 6 256 0;
 #X obj 410 10 nbx 5 14 6 8 0 0 empty empty empty 0 -8 0 10 #fcfcfc
 #000000 #000000 6 256 0;
 #X text 480 10 B;

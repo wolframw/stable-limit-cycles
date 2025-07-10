@@ -1,4 +1,4 @@
-#N canvas 935 436 770 415 10;
+#N canvas 675 451 770 415 10;
 #X obj 50 20 nbx 5 14 0 10000 0 1 empty empty empty 0 -8 0 10 #fcfcfc
 #000000 #000000 200 256 0;
 #X obj 50 130 osc~;
@@ -8,7 +8,7 @@
 #X obj 200 380 dac~;
 #X obj 200 350 *~;
 #X obj 270 327 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 1200 1;
+#000000 #000000 800 1;
 #X floatatom 270 350 5 0 0 0 - - -, f 5;
 #X obj 70 160 nbx 6 14 0 1000 0 1 empty empty empty 0 -8 0 10 #fcfcfc
 #000000 #000000 27.8 256 0;
@@ -35,11 +35,11 @@
 #X obj 180 260 *~ 0.45;
 #X obj 180 240 vdp_circle~;
 #X obj 370 240 vdp_circle~;
-#X obj 562 190 vline~;
-#X obj 560 10 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000;
+#X obj 560 190 vline~;
+#X obj 560 140 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
 #X msg 500 230 0 \, 1 2 \, 0 300 10;
-#X msg 588 142 0 \, 2 2 \, 0 200 10;
+#X msg 560 170 0 \, 2 2 \, 0 200 10;
 #X connect 0 0 12 0;
 #X connect 0 0 13 0;
 #X connect 0 0 16 0;

@@ -1,6 +1,6 @@
-#N canvas 806 372 1044 544 10;
+#N canvas 627 382 1044 544 10;
 #X obj 180 180 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 400 1;
+#000000 #000000 0 1;
 #X floatatom 320 200 5 0 0 0 - - -, f 5;
 #X obj 80 230 dac~;
 #X obj 90 190 *~;
@@ -87,8 +87,8 @@
 #000000 #000000 0 1;
 #X floatatom 100 40 5 0 0 0 - - -, f 5;
 #X text 50 20 Freq;
-#X obj 190 50 hsl 128 15 1.3 2.2 0 0 empty empty empty -2 -8 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 190 50 hsl 128 15 1.35 2.2 0 0 empty empty empty -2 -8 0 10
+#fcfcfc #000000 #000000 0 1;
 #X floatatom 200 70 5 0 0 0 - - -, f 5;
 #X obj 190 90 hsl 128 15 6 8 0 0 empty empty empty -2 -8 0 10 #fcfcfc
 #000000 #000000 0 1;

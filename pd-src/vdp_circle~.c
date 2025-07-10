@@ -6,7 +6,8 @@
 
 static t_class *vdp_circle_tilde_class;
 
-#define OS_FACTOR 20
+#define SUBSTEPS        24
+#define OVERSAMPLING    12
 
 typedef struct {
     /* PD object */
@@ -14,8 +15,6 @@ typedef struct {
 
     /* state */
     t_float      f;
-    t_float      freq;
-    t_float      mu;
     t_float      state[2];
     biquad_state filter_state[butter8_20_size];
 
@@ -30,8 +29,6 @@ typedef struct {
 void *vdp_circle_tilde_new( void )
 {
     t_vdp_circle_tilde *vdp_circle = (t_vdp_circle_tilde *) pd_new( vdp_circle_tilde_class );
-    vdp_circle->freq        = 0.0f;
-    vdp_circle->mu          = 0.0f;
     vdp_circle->state[0]    = 2.0f;
     vdp_circle->state[1]    = 0.0f;
     memset( vdp_circle->filter_state, 0, sizeof(float) * butter8_20_size );
@@ -90,24 +87,22 @@ t_int *vdp_circle_tilde_perform( t_int *w )
     int          n        = (int)(w[5]);
 
     while ( n-- ) {
-        float clamped_freq  = clampf( 0.0f, 2500.0f, *in_freq );
-        float clamped_mu    = clampf( 0.0f, 10.0f, *in_mu );
+        float freq  = clampf( 0.0f, 2500.0f, *in_freq );
+        float mu    = clampf( 0.0f, 10.0f, *in_mu );
 
         float sample = 0.0f;
         int i;
-        for ( i = 0; i < OS_FACTOR; ++i ) {
-            float freq   = lerp( clamped_freq, vdp_circle->freq, (float) i / (OS_FACTOR - 1) );
-            float mu     = lerp( clamped_mu, vdp_circle->mu, (float) i / (OS_FACTOR - 1) );
+        for ( i = 0; i < SUBSTEPS; ++i ) {
             float period = vdp_circle_period( mu );
-            float dt     = (period * freq) / (sys_getsr() * OS_FACTOR);
+            float dt     = (period * freq) / (sys_getsr() * SUBSTEPS);
 
             solve( vdp_circle->state, mu, dt );
-            sample = vdp_circle->state[0] / 2;
-            sample = biquad( sample, vdp_circle->filter_state, butter8_20, butter8_20_size );
-        }
 
-        vdp_circle->freq = clamped_freq;
-        vdp_circle->mu = clamped_mu;
+            if (i % (SUBSTEPS / OVERSAMPLING) == 0) {
+                sample = (vdp_circle->state[0] / 2) * 0.828f;
+                sample = biquad( sample, vdp_circle->filter_state, butter8_12, butter8_20_size );
+            }
+        }
 
         *out = sample;
 
